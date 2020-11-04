@@ -1,0 +1,25 @@
+/* .highscore {
+    font-size: 15px;
+} */
+
+.time-left {
+    float: right;
+    font-size: 15px;
+}
+
+.row {
+    width: 99%;
+}
+
+.questions {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 250px;
+    background-color: bisque;
+}
+
+.answers {
+    height: 300px;
+}
