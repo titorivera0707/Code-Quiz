@@ -10,7 +10,7 @@ var answers = document.querySelector(".answers");
 var response = document.querySelector(".response");
 // var chooseAnswer = document.querySelector(".buttons")
 var score = 0;
-var secondsLeft = 3;
+var secondsLeft = 100;
 // var totalScores = JSON.parse(localSotrage.getItem("userData"));
 var index = 0;
 var questions = [ 
@@ -38,9 +38,13 @@ function start() {
   startButton.addEventListener("click", function() {
     test();
     setTime();
+    startButton.classList.add("d-none");
+    startQuiz.classList.add("d-none");
+    instructions.classList.add("d-none")
   });
 }
 start();
+
 function test() {
   for (var i = 0; i < questions.length; i++){
     if (i < questions.length){
@@ -57,20 +61,22 @@ function test() {
     }
   }
 }
-function allQuestions(){
-  for (var i = 0; i < arr.length; i++) {
+function allQuestions(arr, c, secondsLeft){
+  arr++
     var buttons = document.createElement("button");
-    buttons.textContent = arr[i]
+    buttons.textContent = arr
     answers.appendChild(buttons);
-    button.addEventListener("click", test)
-    if(arr[i] === c) {
+    buttons.addEventListener("click", function() {
+      test();
+    
+    if(arr[j] === c) { 
       alert('You chose correctly!');
     }
     else {
       alert('You chose wrong!');
-      setTime(secondsLeft - 10);
+      secondsLeft - 10;
     }
-  }
+  });
 }
 
 // console.log(test(questions[0].a, questions[0].c))
