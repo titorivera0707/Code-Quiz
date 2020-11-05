@@ -22,7 +22,26 @@ var questions = [
   { q: "What grade will I get for this quiz?", a:3}
 ];
 
-function test(questions) {
+function start() {
+  var startQuiz = document.createElement("h2");
+  startQuiz.textContent = "Code Quiz!"
+  startQuiz.classList.add("center");
+  question.appendChild(startQuiz);
+  var instructions = document.createElement("h4");
+  instructions.textContent = "In this code quiz, you will be answering questions about coding. Each question will have 4 options but only 1 answer. For every question that you get right, you will get a point. If you answer a question wrong, you will not get a point and you will lose 10 seconds. Quiz will begin once you click on the Start Quiz button."
+  instructions.classList.add("center");
+  heading.appendChild(instructions);
+  var startButton = document.createElement("button");
+  startButton.textContent = "Start Quiz";
+  startButton.classList.add("boldquiz");
+  answers.appendChild(startButton);
+  startButton.addEventListener("click", function() {
+    test();
+    setTime();
+  });
+}
+start();
+function test() {
   for (var i = 0; i < questions.length; i++){
     if (i < questions.length){
       var newQuestions = document.createElement("h2");
@@ -38,20 +57,21 @@ function test(questions) {
     }
   }
 }
-function allQuestions(arr, c){
+function allQuestions(){
   for (var i = 0; i < arr.length; i++) {
     var buttons = document.createElement("button");
     buttons.textContent = arr[i]
     answers.appendChild(buttons);
     button.addEventListener("click", test)
     if(arr[i] === c) {
-      alert('You chose correctly!')
+      alert('You chose correctly!');
+    }
+    else {
+      alert('You chose wrong!');
+      setTime(secondsLeft - 10);
     }
   }
 }
-  questions[0].a
-
-test(questions);
 
 // console.log(test(questions[0].a, questions[0].c))
 
@@ -78,7 +98,3 @@ function setTime() {
 
   }, 1000);
 }
-
-highScore
-
-setTime();
