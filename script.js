@@ -61,22 +61,24 @@ function test() {
     }
   }
 }
-function allQuestions(arr, c, secondsLeft){
-  arr++
+function allQuestions(c){
+  for (var i = 0; i < questions.length; i++) {
     var buttons = document.createElement("button");
-    buttons.textContent = arr
+    buttons.textContent = questions[i].d
     answers.appendChild(buttons);
     buttons.addEventListener("click", function() {
-      test();
     
-    if(arr[j] === c) { 
+    if(questions[i] === c) { 
       alert('You chose correctly!');
+      test();
     }
     else {
       alert('You chose wrong!');
       secondsLeft - 10;
+      test();
     }
   });
+}
 }
 
 // console.log(test(questions[0].a, questions[0].c))
