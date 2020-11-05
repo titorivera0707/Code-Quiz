@@ -2,8 +2,13 @@ var highScore = document.querySelector(".highscore");
 var timeLeft = document.querySelector(".time-left");
 var question = document.querySelector(".questions");
 var heading = document.querySelector(".heading");
+var answers = document.querySelector(".answers");
+// var button1 = document.querySelector("#b1");
+// var button2 = document.querySelector("#b2");
+// var button3 = document.querySelector("#b3");
+// var button4 = document.querySelector("#b4");
 var response = document.querySelector(".response");
-var chooseAnswer = document.querySelector(".buttons")
+// var chooseAnswer = document.querySelector(".buttons")
 var score = 0;
 var secondsLeft = 3;
 // var totalScores = JSON.parse(localSotrage.getItem("userData"));
@@ -17,21 +22,49 @@ var questions = [
   { q: "What grade will I get for this quiz?", a:3}
 ];
 
-function test(arr, c) {
+function test(questions) {
+  for (var i = 0; i < questions.length; i++){
+    if (i < questions.length){
+      var newQuestions = document.createElement("h2");
+      newQuestions.textContent = questions[i].q;
+      question.appendChild(newQuestions);
+      if(i < questions.length){
+        allQuestions();
+      }
+      else {
+        i = 0
+        allQuestions();
+      }
+    }
+  }
+}
+function allQuestions(arr, c){
   for (var i = 0; i < arr.length; i++) {
+    var buttons = document.createElement("button");
+    buttons.textContent = arr[i]
+    answers.appendChild(buttons);
+    button.addEventListener("click", test)
     if(arr[i] === c) {
       alert('You chose correctly!')
     }
   }
-  questions[0].a
 }
+  questions[0].a
 
-test(questions[0].a, questions[0].c)
+test(questions);
 
-chooseAnswer.addEventListener("click", function() {
-  score();
+// console.log(test(questions[0].a, questions[0].c))
 
-})
+
+// chooseAnswer.addEventListener("click", function() {
+//   score();
+//   question();
+// })
+
+// function () {
+//   question.
+  
+// }
 
 function setTime() {
   var timerInterval = setInterval(function() {
@@ -40,10 +73,12 @@ function setTime() {
 
     if(secondsLeft === 0) {
       clearInterval(timerInterval);
-      allQuestions();
+      // highScore();
     }
 
   }, 1000);
 }
+
+highScore
 
 setTime();
