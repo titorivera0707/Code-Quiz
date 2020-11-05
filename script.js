@@ -70,6 +70,7 @@ function allQuestions(c){
     
     if(questions[i] === c) { 
       alert('You chose correctly!');
+      score++;
       test();
     }
     else {
