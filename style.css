@@ -16,10 +16,8 @@
     margin-left: auto;
     margin-right: auto;
     width: 50%;
-    height: 250px;
     background-color: bisque;
 }
 
-.answers {
-    height: 300px;
-}
+/* .answers {
+} */
