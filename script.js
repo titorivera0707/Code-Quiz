@@ -5,7 +5,7 @@ var heading = document.querySelector(".heading");
 var answers = document.querySelector(".answers");
 var response = document.querySelector(".response");
 var score = 0;
-var secondsLeft = 15;
+var secondsLeft = 100;
 var index = 0;
 var questions = [ 
   { q: "What color is the sky?", a: ["blue", "red", "white", "black"], c:"blue"},
@@ -41,29 +41,25 @@ function start() {
 
 
 function renderQuestion(q, aArr) {
+
   var questionEl = document.createElement("h2");
   questionEl.textContent = q
   question.appendChild(questionEl);
   for (var j = 0; j < aArr.length; j++) {
   var answerButton = document.createElement("button");
-  answerButton.setAttribute("id", j);
+  answerButton.setAttribute("id", "btn-"+j);
   answerButton.textContent = aArr[j];
-  answers.appendChild(answerButton); 
+  answers.appendChild(answerButton);
   }
   
 }
 
 
-function logic(j, questions) {
-  if(j === questions.length - 1) {
+function logic(j, aArr) {
+  if(j === aArr.length - 1) {
     highscores();
-    // Game Over Stats I.E. Total score, Time left, name etc.
     return
   } 
-  // else if (timeLeft === 0) {
-  //   highScores();
-  //   return
-  // } 
   else {
     renderQuestion(score, index);
     if (renderQuestion() === true) {
@@ -79,7 +75,7 @@ function logic(j, questions) {
     // if question is still there, hide the previous question
     // if false, we iterate the index and subtract the seconds
     // we then finally call back the logic function passing in our new index and array
-    return logic(i,questions)
+    return logic(index, arr)
   }
 }
 function setTime() {
@@ -100,15 +96,17 @@ function highScores() {
 
 function evaluation(userChoice, correctAnswer) {
   if(userChoice === correctAnswer) {
+    console.log(userChoice)
+    console.log(correctAnswer)
     return true;
     
   } else {
     return false;
   }
 }
-
-document.addEventListener("click", function(e) {
+document.documentElement.addEventListener("click", function(e) {
   if(e.target && e.target.id) {
+    console.log(e.target)
     evaluation(e.target.textContent, questions[index].c)
   }
 })
