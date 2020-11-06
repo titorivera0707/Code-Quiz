@@ -5,15 +5,15 @@ var heading = document.querySelector(".heading");
 var answers = document.querySelector(".answers");
 var response = document.querySelector(".response");
 var score = 0;
-var secondsLeft = 3;
+var secondsLeft = 15;
 var index = 0;
 var questions = [ 
   { q: "What color is the sky?", a: ["blue", "red", "white", "black"], c:"blue"},
   { q: "How many days in a year?", a:["12" , "100", "250", "365"], c:"365"},
   { q: "How many ounces in a pound?", a:["10", "11", "15", "16"], c: "16"},
   { q: "What year was the declaration of independence written?", a:["1775","1776", "1777", "2001"], c:"1776"},
-  { q: "What color are bananas?", a:4},
-  { q: "What grade will I get for this quiz?", a:3}
+  { q: "What color are bananas?", a:["blue", "red", "white", "black"], c:"blue"},
+  { q: "What grade will I get for this quiz?", a:["12" , "100", "250", "365"], c:"365"},
 ];
 
 function start() {
@@ -44,19 +44,18 @@ function renderQuestion(q, aArr) {
   var questionEl = document.createElement("h2");
   questionEl.textContent = q
   question.appendChild(questionEl);
-  for (var i = 0; i < aArr.length; i++) {
-    var answerButton = document.createElement("button");
-    answerButton.setAttribute("id", i);
-    answerButton.textContent = aArr[i];
-    answers.appendChild(answerButton);
-    evaluation();
+  for (var j = 0; j < aArr.length; j++) {
+  var answerButton = document.createElement("button");
+  answerButton.setAttribute("id", j);
+  answerButton.textContent = aArr[j];
+  answers.appendChild(answerButton); 
   }
   
 }
 
 
-function logic(i, arr) {
-  if(i === arr.length - 1) {
+function logic(j, questions) {
+  if(j === questions.length - 1) {
     highscores();
     // Game Over Stats I.E. Total score, Time left, name etc.
     return
@@ -70,22 +69,19 @@ function logic(i, arr) {
     if (renderQuestion() === true) {
       score++;
       index++;
-      renderQuestion()
     }
     else {
       index++;
       secondsLeft - 10;
-      renderQuestion()
     }
-    console.log(logic(i, arr))
+    console.log(j, questions)
     // if true, we then add score + iterate the index
     // if question is still there, hide the previous question
     // if false, we iterate the index and subtract the seconds
     // we then finally call back the logic function passing in our new index and array
-    return logic(i,arr)
+    return logic(i,questions)
   }
 }
-
 function setTime() {
   var timerInterval = setInterval(function() {
     secondsLeft--;
@@ -98,25 +94,24 @@ function setTime() {
 
   }, 1000);
 }
-
 function highScores() {
   alert("Finished!")
 }
 
 function evaluation(userChoice, correctAnswer) {
   if(userChoice === correctAnswer) {
-    console.log(userChoice)
     return true;
     
   } else {
     return false;
   }
 }
-console.log(evaluation())
+
 document.addEventListener("click", function(e) {
   if(e.target && e.target.id) {
     evaluation(e.target.textContent, questions[index].c)
   }
 })
-
+console.log(index)
+console.log(score)
 start();
