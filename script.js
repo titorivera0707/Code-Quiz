@@ -3,21 +3,15 @@ var timeLeft = document.querySelector(".time-left");
 var question = document.querySelector(".questions");
 var heading = document.querySelector(".heading");
 var answers = document.querySelector(".answers");
-// var button1 = document.querySelector("#b1");
-// var button2 = document.querySelector("#b2");
-// var button3 = document.querySelector("#b3");
-// var button4 = document.querySelector("#b4");
 var response = document.querySelector(".response");
-// var chooseAnswer = document.querySelector(".buttons")
 var score = 0;
-var secondsLeft = 100;
-// var totalScores = JSON.parse(localSotrage.getItem("userData"));
+var secondsLeft = 3;
 var index = 0;
 var questions = [ 
   { q: "What color is the sky?", a: ["blue", "red", "white", "black"], c:"blue"},
-  { q: "How many days in a year?", a:2},
-  { q: "How many ounces in a pound?", a:3},
-  { q: "What year was the declaration of independence written?", a:2},
+  { q: "How many days in a year?", a:["12" , "100", "250", "365"], c:"365"},
+  { q: "How many ounces in a pound?", a:["10", "11", "15", "16"], c: "16"},
+  { q: "What year was the declaration of independence written?", a:["1775","1776", "1777", "2001"], c:"1776"},
   { q: "What color are bananas?", a:4},
   { q: "What grade will I get for this quiz?", a:3}
 ];
@@ -36,64 +30,61 @@ function start() {
   startButton.classList.add("boldquiz");
   answers.appendChild(startButton);
   startButton.addEventListener("click", function() {
-    test();
-    setTime();
-    startButton.classList.add("d-none");
-    startQuiz.classList.add("d-none");
-    instructions.classList.add("d-none")
+  renderQuestion(questions[index].q, questions[index].a);
+  setTime();
+  startButton.classList.add("d-none");
+  startQuiz.classList.add("d-none");
+  instructions.classList.add("d-none");
   });
 }
-start();
 
-function test() {
-  for (var i = 0; i < questions.length; i++){
-    if (i < questions.length){
-      var newQuestions = document.createElement("h2");
-      newQuestions.textContent = questions[i].q;
-      question.appendChild(newQuestions);
-      if(i < questions.length){
-        allQuestions();
-      }
-      else {
-        i = 0
-        allQuestions();
-      }
-    }
+
+
+function renderQuestion(q, aArr) {
+  var questionEl = document.createElement("h2");
+  questionEl.textContent = q
+  question.appendChild(questionEl);
+  for (var i = 0; i < aArr.length; i++) {
+    var answerButton = document.createElement("button");
+    answerButton.setAttribute("id", i);
+    answerButton.textContent = aArr[i];
+    answers.appendChild(answerButton);
+    evaluation();
   }
+  
 }
-function allQuestions(c){
-  for (var i = 0; i < questions.length; i++) {
-    var buttons = document.createElement("button");
-    buttons.textContent = questions[i].d
-    answers.appendChild(buttons);
-    buttons.addEventListener("click", function() {
-    
-    if(questions[i] === c) { 
-      alert('You chose correctly!');
+
+
+function logic(i, arr) {
+  if(i === arr.length - 1) {
+    highscores();
+    // Game Over Stats I.E. Total score, Time left, name etc.
+    return
+  } 
+  // else if (timeLeft === 0) {
+  //   highScores();
+  //   return
+  // } 
+  else {
+    renderQuestion(score, index);
+    if (renderQuestion() === true) {
       score++;
-      test();
+      index++;
+      renderQuestion()
     }
     else {
-      alert('You chose wrong!');
+      index++;
       secondsLeft - 10;
-      test();
+      renderQuestion()
     }
-  });
+    console.log(logic(i, arr))
+    // if true, we then add score + iterate the index
+    // if question is still there, hide the previous question
+    // if false, we iterate the index and subtract the seconds
+    // we then finally call back the logic function passing in our new index and array
+    return logic(i,arr)
+  }
 }
-}
-
-// console.log(test(questions[0].a, questions[0].c))
-
-
-// chooseAnswer.addEventListener("click", function() {
-//   score();
-//   question();
-// })
-
-// function () {
-//   question.
-  
-// }
 
 function setTime() {
   var timerInterval = setInterval(function() {
@@ -102,8 +93,30 @@ function setTime() {
 
     if(secondsLeft === 0) {
       clearInterval(timerInterval);
-      // highScore();
+      highScores();
     }
 
   }, 1000);
 }
+
+function highScores() {
+  alert("Finished!")
+}
+
+function evaluation(userChoice, correctAnswer) {
+  if(userChoice === correctAnswer) {
+    console.log(userChoice)
+    return true;
+    
+  } else {
+    return false;
+  }
+}
+console.log(evaluation())
+document.addEventListener("click", function(e) {
+  if(e.target && e.target.id) {
+    evaluation(e.target.textContent, questions[index].c)
+  }
+})
+
+start();
